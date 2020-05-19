@@ -1,0 +1,18 @@
+server:
+  port: 9001
+spring:
+  application:
+    name: eureka-server-back
+eureka:
+  instance:
+    hostname: eureka-server-back
+    appname: eureka-server
+    instance-id: ${spring.application.name}:${spring.cloud.client.ip-address}:${server.port}
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+    service-url:
+      defaultZone: http://eureka-server-master:9000/eureka/
+  server:
+    enable-self-preservation: false
+    eviction-interval-timer-in-ms: 4000
