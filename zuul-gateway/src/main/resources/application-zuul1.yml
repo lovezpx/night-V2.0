@@ -1,0 +1,40 @@
+server:
+  port: 9011
+spring:
+  application:
+    name: zuul-gateway
+eureka:
+  client:
+    service-url:
+      defaultZone: http://127.0.0.1:9000/eureka/,http://127.0.0.1:9001/eureka/
+  instance:
+    instance-id: ${spring.application.name}:${spring.cloud.client.ip-address}:${server.port}
+    lease-expiration-duration-in-seconds: 30
+    lease-renewal-interval-in-seconds: 10
+    prefer-ip-address: true
+zuul:
+  retryable: true
+  connectTimeout: 500
+  readTimeout: 5000
+  maxAutoRetries: 1
+  maxAutoRetriesNextServer: 3
+  okToRetryOnAllOperations: true
+  retryableStatusCodes: 500,404,502
+  routes:
+    video:
+      path: /video/**
+      service-id: video
+      strip-prefix: true
+ribbon:
+  ConnectTimeout: 250 # 连接超时时间(ms)
+  ReadTimeout: 2000 # 通信超时时间(ms)
+  OkToRetryOnAllOperations: true # 是否对所有操作重试
+  MaxAutoRetriesNextServer: 2 # 同一服务不同实例的重试次数
+  MaxAutoRetries: 1 # 同一实例的重试次数
+hystrix:
+  command:
+    default:
+      execution:
+        isolation:
+          thread:
+            timeoutInMillisecond: 6000 # 熔断超时时长：6000ms

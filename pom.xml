@@ -12,6 +12,8 @@
     <version>0.0.1-SNAPSHOT</version>
     <modules>
         <module>service-center</module>
+        <module>support-core</module>
+        <module>zuul-gateway</module>
     </modules>
     <name>night</name>
     <description>基于微服务架构的媒体网站~</description>
