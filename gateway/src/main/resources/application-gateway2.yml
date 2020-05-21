@@ -13,15 +13,19 @@ spring:
           enabled: true
           lower-case-service-id: true
       routes:
-      - id: video
-        uri: lb://VIDEO
-        predicates:
-        - Path=/video/**
-        filters:
-        - name: Retry
-          args:
-            retries: 3
-            statuses: BAD_GATEWAY
+        - id: video
+          uri: lb://video-service
+          predicates:
+            - Path=/video/**
+          filters:
+            - name: Retry
+              args:
+                retries: 3
+                statuses: BAD_GATEWAY
+video-service:
+  ribbon:
+    listOfServers: VIDEO
+    NFLoadBalancerRuleClassName: com.netflix.loadbalancer.RoundRobinRule
 eureka:
   client:
     service-url:
